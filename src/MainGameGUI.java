@@ -1,3 +1,6 @@
+
+import java.awt.event.ActionListener;
+
 /*
  * Stella Castura
  * 6/7/2022
@@ -9,31 +12,22 @@
  *
  * @author jumpi
  */
+
 public class MainGameGUI extends javax.swing.JFrame {
-    
-    //Initialize a variable that tracks what choice you made
-    int choice = 0;
-    //code to get what button was used
-    private int button()
-    {
-        return 0;
-    }
-    //Startup code
-    private void startup()
-    {
-      lblHPNum.setText("10"); 
-      txtMainText.setText("Test text");
-        System.out.println("Hello");
-    }
+    String choice = "0";
+    public static boolean begun = false;
     /**
      * Creates new form MainGameGUI
      */
+    private void begin()
+    {
+        begun = true;
+        lblHPNum.setText("10");
+        txtMainText.setText("Test text");
+    }
     public MainGameGUI() {
-        initComponents();
-        if (btnChoice1.isSelected())
-        {
-            startup();
-        }
+    initComponents();
+    
     }
     
     /**
@@ -201,19 +195,23 @@ public class MainGameGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnChoice2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice2ActionPerformed
-        choice = 2;
+        choice = "2";        
     }//GEN-LAST:event_btnChoice2ActionPerformed
 
     private void btnChoice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice1ActionPerformed
-        choice = 1;
+        choice = "1";
+        if (!begun)
+        {
+            begin();
+        }
     }//GEN-LAST:event_btnChoice1ActionPerformed
 
     private void btnChoice3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice3ActionPerformed
-        choice = 3;
+        choice = "3";
     }//GEN-LAST:event_btnChoice3ActionPerformed
 
     private void btnChoice4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice4ActionPerformed
-        choice = 4;
+        choice = "4";
     }//GEN-LAST:event_btnChoice4ActionPerformed
 
     private void btnInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryActionPerformed
