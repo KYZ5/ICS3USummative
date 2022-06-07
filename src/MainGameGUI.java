@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Stella Castura
+ * 6/7/2022
+ * MainGameGUI.java
+ * The main game form of my ICS3U summtive
  */
 
 /**
@@ -9,14 +10,32 @@
  * @author jumpi
  */
 public class MainGameGUI extends javax.swing.JFrame {
-
+    
+    //Initialize a variable that tracks what choice you made
+    int choice = 0;
+    //code to get what button was used
+    private int button()
+    {
+        return 0;
+    }
+    //Startup code
+    private void startup()
+    {
+      lblHPNum.setText("10"); 
+      txtMainText.setText("Test text");
+        System.out.println("Hello");
+    }
     /**
      * Creates new form MainGameGUI
      */
     public MainGameGUI() {
         initComponents();
+        if (btnChoice1.isSelected())
+        {
+            startup();
+        }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,9 +47,9 @@ public class MainGameGUI extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lblMainText = new javax.swing.JTextArea();
-        btnChoice2 = new javax.swing.JButton();
+        txtMainText = new javax.swing.JTextArea();
         btnChoice1 = new javax.swing.JButton();
+        btnChoice2 = new javax.swing.JButton();
         btnChoice3 = new javax.swing.JButton();
         btnChoice4 = new javax.swing.JButton();
         btnInventory = new javax.swing.JButton();
@@ -44,23 +63,23 @@ public class MainGameGUI extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
-        lblMainText.setColumns(20);
-        lblMainText.setLineWrap(true);
-        lblMainText.setRows(5);
-        lblMainText.setText("The main text of the game will appear here. Click on the buttons below to make choices or view\n your inventory or map.");
-        jScrollPane1.setViewportView(lblMainText);
-
-        btnChoice2.setText("---");
-        btnChoice2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChoice2ActionPerformed(evt);
-            }
-        });
+        txtMainText.setColumns(20);
+        txtMainText.setLineWrap(true);
+        txtMainText.setRows(5);
+        txtMainText.setText("The main text of the game will appear here. Click on the buttons below to make choices or view\n your inventory or map.");
+        jScrollPane1.setViewportView(txtMainText);
 
         btnChoice1.setText("Continue");
         btnChoice1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnChoice1ActionPerformed(evt);
+            }
+        });
+
+        btnChoice2.setText("---");
+        btnChoice2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChoice2ActionPerformed(evt);
             }
         });
 
@@ -96,7 +115,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         lblHPText.setText("HP: ");
 
         lblHPNum.setForeground(new java.awt.Color(255, 255, 255));
-        lblHPNum.setText("10");
+        lblHPNum.setText("----");
 
         lblStatusEffectsText.setForeground(new java.awt.Color(255, 255, 255));
         lblStatusEffectsText.setText("Status Effects:");
@@ -182,27 +201,27 @@ public class MainGameGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnChoice2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice2ActionPerformed
-        // TODO add your handling code here:
+        choice = 2;
     }//GEN-LAST:event_btnChoice2ActionPerformed
 
     private void btnChoice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice1ActionPerformed
-        // TODO add your handling code here:
+        choice = 1;
     }//GEN-LAST:event_btnChoice1ActionPerformed
 
     private void btnChoice3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice3ActionPerformed
-        // TODO add your handling code here:
+        choice = 3;
     }//GEN-LAST:event_btnChoice3ActionPerformed
 
     private void btnChoice4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice4ActionPerformed
-        // TODO add your handling code here:
+        choice = 4;
     }//GEN-LAST:event_btnChoice4ActionPerformed
 
     private void btnInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryActionPerformed
-        // TODO add your handling code here:
+        new InventoryGUI().setVisible(true);
     }//GEN-LAST:event_btnInventoryActionPerformed
 
     private void btnMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMapActionPerformed
-        // TODO add your handling code here:
+        new MapGUI().setVisible(true);
     }//GEN-LAST:event_btnMapActionPerformed
 
     /**
@@ -251,8 +270,8 @@ public class MainGameGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblHPNum;
     private javax.swing.JLabel lblHPText;
-    private javax.swing.JTextArea lblMainText;
     private javax.swing.JLabel lblStatusEffectsInfo;
     private javax.swing.JLabel lblStatusEffectsText;
+    private javax.swing.JTextArea txtMainText;
     // End of variables declaration//GEN-END:variables
 }
