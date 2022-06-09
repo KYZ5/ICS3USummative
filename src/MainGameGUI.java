@@ -1,3 +1,7 @@
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * Stella Castura
  * 6/7/2022
@@ -14,12 +18,15 @@ public class MainGameGUI extends javax.swing.JFrame {
     /**
      * Creates new form MainGameGUI
      */
+    
     //Create needed variables
     int HP = 10;
     static boolean thirsty = false;
     static boolean hungry = false;
     static boolean tired = false;
     static boolean injured = false;
+    static boolean shelter = false;
+    
     
     //A method that updates the status effect bar
     private void updateEffect()
@@ -47,6 +54,8 @@ public class MainGameGUI extends javax.swing.JFrame {
     //Begins the story, gives the exposition and continues the plot. 
     private void begin()
     {
+        btnChoice1.setText("---");
+        btnChoice2.setText("---");
         lblHPNum.setText("" + HP);
         //main Text
         //THIS DOES NOT WORK FOR SOME GODFORSAKEN REASON, 
@@ -55,7 +64,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         txtMain.setText("You fly over the badlands in your small craft, carrying cargo to another city. "
                 + "The sigils on the canvas wings, that do most of the job of keeping the plane in the air, glow a barely percivalble blue under the bright red sun. "
                 + "A parchment map, one enchanted to track your location, has been pinned to the inside of the cockpit, and a compass installed into the dashboard shows the direction you need to travel. "
-                + "You fly for several hours in relative peace. The badlans between the cities aren't very eventful, as least from this high up. "
+                + "You fly for several hours in relative peace. The badlands between the cities aren't very eventful, as least from this high up. "
                 + "Of course, very few people have even been on ground level for as long as anyone can remember, and even fewer have returned. "
                 + "Cities are held high in the sky by mesas and buttes that reach several kilometers up. "
                 + "Hundreds of similar but smaller formations cover the badlands, most of them in small clusters. "
@@ -80,10 +89,13 @@ public class MainGameGUI extends javax.swing.JFrame {
         //give options
         btnChoice1.setText("Look for shelter, who knows how dangerous this storm will get");
         btnChoice2.setText("Look for food and water, I'll need it if I want to get out of here safely");
+        
     }
     
    public void food()
    {
+       btnChoice1.setText("---");
+       btnChoice2.setText("---");
        txtMain.setText("Using your hand to shield your face from the sand, you begin to head downhill. "
                + "You figure that if anything is going to be alive in the badlands, it will be near a creekbed, and creeks flow downhill. "
                + "Out of sheer luck, you happen upon a dried up creekbed, and after following it for what seems like hours, it becomes muddy, then full of water. "
@@ -96,12 +108,19 @@ public class MainGameGUI extends javax.swing.JFrame {
        btnChoice1.setText("Press on and look for shelter through the night?");
        btnChoice2.setText("Sleep where you are?");
    }
+   
    public void shelter()
    {
+       btnChoice1.setText("---");
+       btnChoice2.setText("---");       
        //Up to the next comment deals with conditional dialogue.
        //The only way someone seeing this could possibly be tired is if they went to get food and came back
        //Since they are doing the same thing at different times, string x stores description text that chagnes based on what they do
        //x is incorporated into the main text later
+       if (shelter==false)
+       {
+          begin(); 
+       }
        String x = "";
        if (tired)
        {
@@ -126,6 +145,18 @@ public class MainGameGUI extends javax.swing.JFrame {
        btnChoice1.setText("Explore deeper");
        btnChoice2.setText("Stay in the room you are in");
    }
+    public void sleep()
+    {
+        btnChoice1.setText("---");
+        btnChoice2.setText("---");
+        txtMain.setText("You figure it's best not to travel in the badlands at night. "
+                + "You curl up near the creek, and try to go to bed. "
+                + "Eventually, you manage to drift off. "
+                + "You awake to the sound of snuffling around where you are sleeping. "
+                + "");
+        btnChoice1.setText("Run");
+        btnChoice2.setText("Fight");
+    }
     public MainGameGUI() {
     initComponents();
     
@@ -289,33 +320,32 @@ public class MainGameGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnChoice2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice2ActionPerformed
-       //This is button 2   
+       //This is button 2 
        //The begin method sets the text to this. leads to the food() method
         if ((btnChoice2.getText()).equals("Look for food and water, I'll need it if I want to get out of here safely"))
         {
             food();
         }
         //The food mothod sets the code to this. Leads to getting attacked
-        if ((btnChoice2.getText()).equals("Sleep where you are?"))
+        else if ((btnChoice2.getText()).equals("Sleep where you are?"))
         {
-            //Add code
+            sleep();
         }
     }//GEN-LAST:event_btnChoice2ActionPerformed
 
     private void btnChoice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice1ActionPerformed
-        //This is button 1
         //On the start screen, button 1 says continue. This leads to starting the story. (the begin method)
         if ((btnChoice1.getText()).equals("Continue"))
         {
             begin();
         }
         //The begin method sets the text to this. leads to the shelter() method
-        if ((btnChoice1.getText()).equals("Look for shelter, who knows how dangerous this storm will get"))
+        else if ((btnChoice1.getText()).equals("Look for shelter, who knows how dangerous this storm will get"))
         {
             shelter();
         }
         //The food mothod sets the code to this. Leads to the shelter method
-        if ((btnChoice1.getText()).equals("Press on and look for shelter through the night?"))
+        else if ((btnChoice1.getText()).equals("Press on and look for shelter through the night?"))
         {
             shelter();
             //you waled through the night so you are tired
@@ -377,6 +407,7 @@ public class MainGameGUI extends javax.swing.JFrame {
                 new MainGameGUI().setVisible(true);
             }
         });
+      
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
