@@ -26,7 +26,7 @@ public class MainGameGUI extends javax.swing.JFrame {
     static boolean tired = false;
     static boolean injured = false;
     static boolean shelter = false;
-    
+    static boolean map = true;
     
     //A method that updates the status effect bar
     private void updateEffect()
@@ -50,13 +50,15 @@ public class MainGameGUI extends javax.swing.JFrame {
         }
         lblStatusEffectsInfo.setText(x);
     }
-    
+    //a method that updates HP
+    private void updateHP()
+    {
+        lblHPNum.setText("" + HP);
+    }
     //Begins the story, gives the exposition and continues the plot. 
     private void begin()
     {
-        btnChoice1.setText("---");
-        btnChoice2.setText("---");
-        lblHPNum.setText("" + HP);
+        updateHP();
         //main Text
         //THIS DOES NOT WORK FOR SOME GODFORSAKEN REASON, 
         //I'm leaving it for now because it might be my computer
@@ -94,8 +96,6 @@ public class MainGameGUI extends javax.swing.JFrame {
     
    public void food()
    {
-       btnChoice1.setText("---");
-       btnChoice2.setText("---");
        txtMain.setText("Using your hand to shield your face from the sand, you begin to head downhill. "
                + "You figure that if anything is going to be alive in the badlands, it will be near a creekbed, and creeks flow downhill. "
                + "Out of sheer luck, you happen upon a dried up creekbed, and after following it for what seems like hours, it becomes muddy, then full of water. "
@@ -110,9 +110,7 @@ public class MainGameGUI extends javax.swing.JFrame {
    }
    
    public void shelter()
-   {
-       btnChoice1.setText("---");
-       btnChoice2.setText("---");       
+   {     
        //Up to the next comment deals with conditional dialogue.
        //The only way someone seeing this could possibly be tired is if they went to get food and came back
        //Since they are doing the same thing at different times, string x stores description text that chagnes based on what they do
@@ -147,15 +145,57 @@ public class MainGameGUI extends javax.swing.JFrame {
    }
     public void sleep()
     {
-        btnChoice1.setText("---");
-        btnChoice2.setText("---");
+        //main text
         txtMain.setText("You figure it's best not to travel in the badlands at night. "
                 + "You curl up near the creek, and try to go to bed. "
                 + "Eventually, you manage to drift off. "
                 + "You awake to the sound of snuffling around where you are sleeping. "
-                + "");
+                + "You tentativly open one eye, and you see a small horse-like creature nosing at your map. "
+                + "It's no bigger than a dog, and you cound swear it has feathers instead of fur. "
+                + "You watch it for at bit, unsure of what to do. "
+                + "Eventually, it looks you stright in the eye, and it opens it's mouth to reaveal rows of sharp teeth, most of them longer than your hand. "
+                + "It hisses at you, and you have no choice but to...");
+        //label buttons
         btnChoice1.setText("Run");
         btnChoice2.setText("Fight");
+    }
+    public void run()
+    {
+        //main text
+        txtMain.setText("You get up and run as fast as you can, leaving your map and water bottle behind. "
+                + "You can hear the monster behind you, running across the badlands. "
+                + "Eventually, you have to stop running to catch your breath, and you realize you are lost. "
+                + "You can't seem to remember what direction you came from. "
+                + "You walk: ");
+        //you lost your map
+        map = false;
+        //label butons
+        btnChoice1.setText("North");
+        btnChoice2.setText("East");
+        btnChoice3.setText("South");
+        btnChoice4.setText("West");
+    }
+    public void fight()
+    {
+        txtMain.setText("Without anything better to do, you punch the monster in the eye. "
+                + "It reels back, and you think for a second it's going to run away. "
+                + "Then it lunges forwards, and manages to sink on of it's teeth into your arm. "
+                + "You reel back in pain, and the monster goes in to bite your side. "
+                + "You manage to roll out of the way in time, and grab one of it's legs as you go. "
+                + "It falls over and you take advantage of the monster's momentary confusion to kick it in the stomach. "
+                + "It curls up on itself, and you manage to stomp on its neck hard enough that it goes limp after a few seconds.");
+        //You got bit, so you are injured and lose HP
+        HP -= 3;
+        injured = true;
+        updateHP();
+        updateEffect();
+        //button choices
+        btnChoice1.setText("continue");
+        btnChoice2.setText("---");
+    }
+    public void stream()
+    {
+    
     }
     public MainGameGUI() {
     initComponents();
@@ -320,37 +360,52 @@ public class MainGameGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnChoice2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice2ActionPerformed
-       //This is button 2 
-       //The begin method sets the text to this. leads to the food() method
-        if ((btnChoice2.getText()).equals("Look for food and water, I'll need it if I want to get out of here safely"))
-        {
-            food();
-        }
+        //This is button 2
+        //The begin method sets the text to this. leads to the food() method
+        switch (btnChoice2.getText()) {
         //The food mothod sets the code to this. Leads to getting attacked
-        else if ((btnChoice2.getText()).equals("Sleep where you are?"))
-        {
-            sleep();
+            case "Look for food and water, I'll need it if I want to get out of here safely":
+                food();
+                break;
+            case "Sleep where you are?":
+                sleep();
+                break;
+            case "Fight":
+                fight();
+                break;
+            default:
+                break;
         }
     }//GEN-LAST:event_btnChoice2ActionPerformed
 
     private void btnChoice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice1ActionPerformed
         //On the start screen, button 1 says continue. This leads to starting the story. (the begin method)
-        if ((btnChoice1.getText()).equals("Continue"))
-        {
-            begin();
-        }
-        //The begin method sets the text to this. leads to the shelter() method
-        else if ((btnChoice1.getText()).equals("Look for shelter, who knows how dangerous this storm will get"))
-        {
-            shelter();
-        }
-        //The food mothod sets the code to this. Leads to the shelter method
-        else if ((btnChoice1.getText()).equals("Press on and look for shelter through the night?"))
-        {
-            shelter();
-            //you waled through the night so you are tired
-            tired = true;
-            updateEffect();
+        switch (btnChoice1.getText()) {
+            //The begin method sets the text to this. leads to the shelter() method
+            case "Continue":
+                begin();
+                break;
+            //The food mothod sets the code to this. Leads to the shelter method
+            case "Look for shelter, who knows how dangerous this storm will get":
+                shelter();
+                break;
+            //the food method sets the text to this
+            case "Press on and look for shelter through the night?":
+                shelter();
+                //you waled through the night so you are tired
+                tired = true;
+                updateEffect();
+                break;
+            //the sleep method sets the text to this
+            case "Run":
+               run();
+               break; 
+            //the fight method sets the text to this
+            //The c is lower case to differentiate from the first one
+            case "continue":
+                stream();
+            default:
+                break;
         }
     }//GEN-LAST:event_btnChoice1ActionPerformed
 
@@ -369,7 +424,10 @@ public class MainGameGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInventoryActionPerformed
 
     private void btnMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMapActionPerformed
+        if (map == true)
+        {
         new MapGUI().setVisible(true);
+        }
     }//GEN-LAST:event_btnMapActionPerformed
 
     /**
