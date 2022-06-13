@@ -20,13 +20,16 @@ public class MainGameGUI extends javax.swing.JFrame {
      */
     
     //Create needed variables
-    int HP = 10;
+    static int HP = 10;
     static boolean thirsty = false;
     static boolean hungry = false;
     static boolean tired = false;
     static boolean injured = false;
-    static boolean shelter = false;
     static boolean map = true;
+    static boolean food = false;
+    static boolean water = true;
+    static int days = 0;
+    static int daysNoWater = 0;
     
     //A method that updates the status effect bar
     private void updateEffect()
@@ -55,14 +58,47 @@ public class MainGameGUI extends javax.swing.JFrame {
     {
         lblHPNum.setText("" + HP);
     }
+    //a method that deals with daily things, like using food and updating status effects
+    private void count()
+    {
+        HP = Integer.parseInt(lblHPNum.getText());
+        if (food)
+        {
+            food = false;
+        }
+        else
+        {
+        hungry = true;
+        }
+        if (water)
+        {
+        water = false;
+        }
+        else
+        {
+        thirsty = true;
+        daysNoWater++;
+        if (injured)
+        {
+            HP -= 2;
+        }
+        updateEffect();
+        updateHP();
+        }
+    }
     //Begins the story, gives the exposition and continues the plot. 
     private void begin()
     {
+        //resets hp and status effects if the user is replaying
+        HP = 10;
+        thirsty = false;
+        hungry = false;
+        tired = false;
+        injured = false;
+        map = true;
         updateHP();
+        updateEffect();
         //main Text
-        //THIS DOES NOT WORK FOR SOME GODFORSAKEN REASON, 
-        //I'm leaving it for now because it might be my computer
-        //But fix this at home
         txtMain.setText("You fly over the badlands in your small craft, carrying cargo to another city. "
                 + "The sigils on the canvas wings, that do most of the job of keeping the plane in the air, glow a barely percivalble blue under the bright red sun. "
                 + "A parchment map, one enchanted to track your location, has been pinned to the inside of the cockpit, and a compass installed into the dashboard shows the direction you need to travel. "
@@ -93,7 +129,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("Look for food and water, I'll need it if I want to get out of here safely");
         
     }
-    
+   //if the user decides to look for food in the storm 
    public void food()
    {
        txtMain.setText("Using your hand to shield your face from the sand, you begin to head downhill. "
@@ -108,23 +144,23 @@ public class MainGameGUI extends javax.swing.JFrame {
        btnChoice1.setText("Press on and look for shelter through the night?");
        btnChoice2.setText("Sleep where you are?");
    }
-   
+   //if the user decides to look for shelter
    public void shelter()
    {     
        //Up to the next comment deals with conditional dialogue.
        //The only way someone seeing this could possibly be tired is if they went to get food and came back
        //Since they are doing the same thing at different times, string x stores description text that chagnes based on what they do
        //x is incorporated into the main text later
-       if (shelter==false)
-       {
-          begin(); 
-       }
        String x = "";
        if (tired)
        {
            x += "Night has already fallen, and you are struggling to keep yourself awake after several hours spent looking for food and water. "
                    + "Off to the distance, you hear short yapping noises from some kinf of wild animal. "
                    + "Your're not sure what can survive here, but you defninitly don't want to meet it. ";
+       }
+       else if (!map)
+       {
+           x += "You're exhausted from running all night, but you manage to keep going. ";
        }
        else
        {
@@ -133,7 +169,7 @@ public class MainGameGUI extends javax.swing.JFrame {
        //main text
        txtMain.setText("You press forwards." + x
                +"You aim for a group of low mesas, who seemed to have shadows on the side that might have been caves when you flew over. "
-               + "Eventually, you find them. "
+               + "Eventually, you reach the mesas. "
                + "On the side of one is a cave, and as you enter, you notice that it goes far deeper than you previously thought, presumalby connecting to a cave system. "
                + "Towards the back of the cave, you see a broken window, set into the cave wall."
                + "The cave, as well, seems far to geometrical to be natural."
@@ -143,6 +179,7 @@ public class MainGameGUI extends javax.swing.JFrame {
        btnChoice1.setText("Explore deeper");
        btnChoice2.setText("Stay in the room you are in");
    }
+   //if the user decides to sleep at the stream
     public void sleep()
     {
         //main text
@@ -159,6 +196,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice1.setText("Run");
         btnChoice2.setText("Fight");
     }
+    //if the user runs from the monster at the stream
     public void run()
     {
         //main text
@@ -169,12 +207,15 @@ public class MainGameGUI extends javax.swing.JFrame {
                 + "You walk: ");
         //you lost your map
         map = false;
+        food = false;
+        water = false;
         //label butons
-        btnChoice1.setText("North");
-        btnChoice2.setText("East");
-        btnChoice3.setText("South");
-        btnChoice4.setText("West");
+        btnChoice1.setText("Left");
+        btnChoice2.setText("Right");
+        btnChoice3.setText("Forwards");
+        btnChoice4.setText("Backwards");
     }
+    //if the user fights the monster at the stream
     public void fight()
     {
         txtMain.setText("Without anything better to do, you punch the monster in the eye. "
@@ -183,20 +224,214 @@ public class MainGameGUI extends javax.swing.JFrame {
                 + "You reel back in pain, and the monster goes in to bite your side. "
                 + "You manage to roll out of the way in time, and grab one of it's legs as you go. "
                 + "It falls over and you take advantage of the monster's momentary confusion to kick it in the stomach. "
-                + "It curls up on itself, and you manage to stomp on its neck hard enough that it goes limp after a few seconds.");
+                + "It curls up on itself, and you manage to stomp on its neck hard enough that it goes limp after a few seconds. "
+                + "You curl up next to the stream and go back to sleep."
+                + "You wake up to the birght light of the sunrise shinging in your eyes. "
+                + "You take a look at your map, and start to figure out the quickest way to get to a city. ");
         //You got bit, so you are injured and lose HP
         HP -= 3;
         injured = true;
         updateHP();
         updateEffect();
         //button choices
-        btnChoice1.setText("continue");
+        btnChoice1.setText("Start walking");
         btnChoice2.setText("---");
+        System.out.println(HP);
     }
-    public void stream()
-    {
     
+    //if the user runs left
+    public void left()
+    {
+        txtMain.setText("You make it back to the stream, and find your map and supplies piled up where you left them. "
+                + "You take a look at your map and try to figure out where you are, and plot your route to the nearest city. ");
+        map = true;
+        food = true;
+        water = true;
+        btnChoice1.setText("Start walking");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
     }
+    //if the user runs right
+    public void lost()
+    {
+        txtMain.setText("You are lost and eventually die of thirst without supplies or a map. Game over.");
+        btnChoice1.setText("Play again?");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    //if the user goes deeper into the caverns
+    public void deeper()
+    {
+        txtMain.setText("It's super old, you find barely anything of use. "
+                + "All of it's like the inside of a castle/keep, there are cracked glass windows that look into other rooms. "
+                + "You do find some really old worn out things, like cutlery, made of a material that you have no idea what it is. "
+                + "You also go deep underground and find an underground lake, and get some water. ");
+        thirsty = false;
+        water = true;
+        updateEffect();
+        btnChoice1.setText("Start walking");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    //if the user doesn't explore the caves and is boring
+    public void stay()
+    {
+        txtMain.setText("You sleep in the room, and nothing disturbs you until morning, when you are woken by sunlight streaming into the cave enterance. "
+                + "");
+        btnChoice1.setText("Start walking");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    //the first day of walking
+    public void walk()
+    {
+        txtMain.setText("You wander for a day and head towards a city. "
+                + "Towards the end of the day, you see a plane flying on the horizon, and you think it might be a search party. ");
+        //this won't work as a method so it's here for now. 
+        if (injured)
+        {
+            HP -= 2;
+        }
+        updateHP();
+        //a day passes
+        count();
+        btnChoice1.setText("Keep following your map");
+        btnChoice2.setText("Follow the plane");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+        System.out.println(HP);
+    }
+    public void plane()
+    {
+        txtMain.setText("You chase after the plane, and you soon lose sight of it. "
+                + "It takes you quite a while to figure out where you are, and you lose a day trying to get back on track. "
+                + "You can't find any shelter, and you have to sleep out in the open that night. ");
+        count();
+        btnChoice1.setText("Keep following your map");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    public void map()
+    {
+        txtMain.setText("You follow your map, spending a fairly uneventful day pushing forwards into the badlands. "
+                + "Towards the end of the day, you see a small creature hop behind a rock. Do you:");
+        count();
+        btnChoice1.setText("Leave it be");
+        btnChoice2.setText("Try to catch it for food");
+        btnChoice3.setText("Follow it to see if it will lead you to water");
+        btnChoice4.setText("---");
+    }
+    public void keepWalking()
+    {
+        txtMain.setText("You keep walking and you see the spire of the nearest city off to the distance. "
+                + "you can also see a small cluster of mesas off to the side. "
+                + "They would probably take you about an hour out of your way to get to. "
+                + "Do you:");
+        btnChoice1.setText("Use them as shelter for the night");
+        btnChoice2.setText("Sleep where you are, they're too far away.");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    public void hunt()
+    {
+        txtMain.setText("You grab a rock, and sneak up behind the creature. "
+                + "You try to pound the rock into the creature's head, and are met with far more resistance than you were expecting. "
+                + "The scales seem to be made of metal or stone, and can't be broken. "
+                + "You grab it by the tail, and flip it over. Its long claws scrach at your hand, marking them badly. "
+                + "You eventually manage to flip it over, and it's softer underbelly is far easier to break though to. "
+                + "You eventually cut though, an get the first bits of food you've had in a long time. ");
+        hungry = false;
+        HP--;
+        updateHP();
+        updateEffect();
+        btnChoice1.setText("Keep walking");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    public void follow()
+    {
+        txtMain.setText("You circle around to get a better look at the creature. "
+                + "It's covered in scales like a pangolin, but has far more legs. "
+                + "After several hours of following it and trying not to spook it, it leads you to a stream. "
+                + "You stop to fill up your waterskein, and take a drink. "
+                + "Once you have done this, do you: ");
+        thirsty = false;
+        water = true;
+        updateEffect();
+        btnChoice1.setText("Leave it be");
+        btnChoice2.setText("Try to catch it for food");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    public void mesas()
+    {
+        txtMain.setText("You head towards the mesas. "
+                + "The inside of the caves inside the mesas are sandstone, similar to the outside, but the walls are carved, with writing in a language you don't recognise engraved on the stone. "
+                + "Once or twice, you try to enter a cavern, only to be pushed back by some magical force. "
+                + "You find their source in a sigil carved into the wall. "
+                + "You're no wizard, so you take the best rubbing you can, by scratching the image of the sigil into the back of your map with a rock. "
+                + "You spend an uneventful night in the cavern, and wake up the next day to keep walking. ");
+        btnChoice1.setText("Head towards the city");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    public void outside()
+    {
+        txtMain.setText("You go to sleep in the middle of the badlands, and get up early the next day, woken yet again by the sun.");
+        btnChoice1.setText("Head towards the city");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    public void city()
+    {
+        count();
+        txtMain.setText("You get to the base of the spire, and are now faced with a problem that hadn't occured to you before. "
+                + "The spires rarely have access to the badlands by land. "
+                + "The spire is made up of sandstone, and is far to tall to be able to talk to people at the top. "
+                + "How do you try to get to the top?");
+        btnChoice1.setText("Climb the spire.");
+        btnChoice2.setText("Look for a door");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    public void climb()
+    {
+        txtMain.setText("You fall and die. It's like 5km of smooth cliff, what did you expect."
+                + "Game Over");
+        btnChoice1.setText("Play again?");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    public void door()
+    {
+        txtMain.setText("You walk for several hours and find a door that leads to a staircase that heads up. You go up."
+                + "You make it back to the city. wow. would you look at that. "
+                + "You eventually return to being a pilot. ");
+        btnChoice1.setText("Play again?");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    /*
+    //a default method to copy
+    public void []()
+    {
+        txtMain.setText("");
+        btnChoice1.setText("---");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    */
     public MainGameGUI() {
     initComponents();
     
@@ -367,11 +602,33 @@ public class MainGameGUI extends javax.swing.JFrame {
             case "Look for food and water, I'll need it if I want to get out of here safely":
                 food();
                 break;
+            //the food method sets the button to this
             case "Sleep where you are?":
                 sleep();
                 break;
+            //the sleep methid sets the button to this
             case "Fight":
                 fight();
+                break;
+            //the run method sets the button to this
+            case "Right":
+                lost();
+                break;
+            //the shelter method sets the button to this
+            case "Stay in the room you are in":
+                stay();
+                break;
+            case "Follow the plane":
+                plane();
+                break;
+            case "Try to catch it for food":
+                hunt();
+                break;
+            case "Sleep where you are, they're too far away.":
+                outside();
+                break;
+            case "Look for a door":
+                door();
                 break;
             default:
                 break;
@@ -400,10 +657,47 @@ public class MainGameGUI extends javax.swing.JFrame {
             case "Run":
                run();
                break; 
-            //the fight method sets the text to this
-            //The c is lower case to differentiate from the first one
-            case "continue":
-                stream();
+            //the run method sets the button to this
+            case "Left":
+                left();
+                break;
+            //the shelter method sets the code to this
+            case "Explore deeper":
+                deeper();
+                break;
+            // all deaths set the button to this
+            case "Play again?":
+                begin();
+                break;
+            //several methods set the text to this, it all leads to the first day of walking. 
+            case "Start walking":
+                if (map)
+                {
+                walk();
+                }
+                else
+                {
+                lost();
+                }
+                break;
+            //the walk method sets the code to this    
+            case "Keep following your map":
+                map();
+                break;
+            case "Keep walking":
+                //fall through
+            case "Leave it be":
+                keepWalking();
+                break;
+            case "Use them as shelter for the night":
+                mesas();
+                break;
+            case "Head towards the city":
+                city();
+                break;
+            case "Climb the spire.":
+                climb();
+                break;
             default:
                 break;
         }
@@ -411,12 +705,25 @@ public class MainGameGUI extends javax.swing.JFrame {
 
     private void btnChoice3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice3ActionPerformed
        //This is button 3
+       //the run method sets the button to this
+       if ((btnChoice3.getText().equals("Forwards")))
+       {
+            lost();
+       }
+       else if ((btnChoice3.getText().equals("Follow it to see if it will lead you to water")))
+       {
+            follow();
+       }
        
     }//GEN-LAST:event_btnChoice3ActionPerformed
 
     private void btnChoice4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice4ActionPerformed
         //This is button 4
-        
+        //the run method sets the button to this
+        if ((btnChoice4.getText().equals("Backwards")))
+       {
+           shelter();
+       }
     }//GEN-LAST:event_btnChoice4ActionPerformed
 
     private void btnInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryActionPerformed
