@@ -30,7 +30,15 @@ public class MainGameGUI extends javax.swing.JFrame {
     static boolean water = true;
     static int days = 0;
     static int daysNoWater = 0;
-    
+    //variables that allow other jframes to get values from this form.
+    public static boolean getWater()
+    {
+        return water;
+    }
+    public static boolean getMap()
+    {
+        return map;
+    }
     //A method that updates the status effect bar
     private void updateEffect()
     {
@@ -86,6 +94,19 @@ public class MainGameGUI extends javax.swing.JFrame {
         updateHP();
         }
     }
+    //A method that checks if you are dead and runs the relevant methods
+    public void checkIfDead()
+    {
+        HP = Integer.parseInt(lblHPNum.getText());
+        if (daysNoWater >= 3)
+        {
+            deathFromDehydration();
+        }
+        if (HP <= 0)
+        {
+            deathFromInjury();
+        }
+    }
     //Begins the story, gives the exposition and continues the plot. 
     private void begin()
     {
@@ -96,6 +117,10 @@ public class MainGameGUI extends javax.swing.JFrame {
         tired = false;
         injured = false;
         map = true;
+        food = false;
+        water = true;
+        days = 0;
+        daysNoWater = 0;
         updateHP();
         updateEffect();
         //main Text
@@ -127,7 +152,6 @@ public class MainGameGUI extends javax.swing.JFrame {
         //give options
         btnChoice1.setText("Look for shelter, who knows how dangerous this storm will get");
         btnChoice2.setText("Look for food and water, I'll need it if I want to get out of here safely");
-        
     }
    //if the user decides to look for food in the storm 
    public void food()
@@ -143,6 +167,7 @@ public class MainGameGUI extends javax.swing.JFrame {
        //Present choices
        btnChoice1.setText("Press on and look for shelter through the night?");
        btnChoice2.setText("Sleep where you are?");
+       checkIfDead();
    }
    //if the user decides to look for shelter
    public void shelter()
@@ -178,6 +203,7 @@ public class MainGameGUI extends javax.swing.JFrame {
        //choices
        btnChoice1.setText("Explore deeper");
        btnChoice2.setText("Stay in the room you are in");
+       checkIfDead();
    }
    //if the user decides to sleep at the stream
     public void sleep()
@@ -195,6 +221,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         //label buttons
         btnChoice1.setText("Run");
         btnChoice2.setText("Fight");
+        checkIfDead();
     }
     //if the user runs from the monster at the stream
     public void run()
@@ -214,6 +241,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("Right");
         btnChoice3.setText("Forwards");
         btnChoice4.setText("Backwards");
+        checkIfDead();
     }
     //if the user fights the monster at the stream
     public void fight()
@@ -236,7 +264,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         //button choices
         btnChoice1.setText("Start walking");
         btnChoice2.setText("---");
-        System.out.println(HP);
+        checkIfDead();
     }
     
     //if the user runs left
@@ -251,6 +279,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        checkIfDead();
     }
     //if the user runs right
     public void lost()
@@ -260,6 +289,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        checkIfDead();
     }
     //if the user goes deeper into the caverns
     public void deeper()
@@ -275,6 +305,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        checkIfDead();
     }
     //if the user doesn't explore the caves and is boring
     public void stay()
@@ -285,6 +316,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        checkIfDead();
     }
     //the first day of walking
     public void walk()
@@ -303,7 +335,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("Follow the plane");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
-        System.out.println(HP);
+        checkIfDead();
     }
     public void plane()
     {
@@ -315,6 +347,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        checkIfDead();
     }
     public void map()
     {
@@ -325,6 +358,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("Try to catch it for food");
         btnChoice3.setText("Follow it to see if it will lead you to water");
         btnChoice4.setText("---");
+        checkIfDead();
     }
     public void keepWalking()
     {
@@ -336,6 +370,8 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("Sleep where you are, they're too far away.");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        checkIfDead();
+        System.out.println("days withot water" + daysNoWater);
     }
     public void hunt()
     {
@@ -353,6 +389,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        checkIfDead();
     }
     public void follow()
     {
@@ -368,6 +405,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("Try to catch it for food");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        checkIfDead();
     }
     public void mesas()
     {
@@ -381,6 +419,8 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        checkIfDead();
+        System.out.println("days withot water" + daysNoWater);
     }
     public void outside()
     {
@@ -389,6 +429,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        checkIfDead();
     }
     public void city()
     {
@@ -401,6 +442,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("Look for a door");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        checkIfDead();
     }
     public void climb()
     {
@@ -410,12 +452,31 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        checkIfDead();
     }
     public void door()
     {
         txtMain.setText("You walk for several hours and find a door that leads to a staircase that heads up. You go up."
                 + "You make it back to the city. wow. would you look at that. "
                 + "You eventually return to being a pilot. ");
+        btnChoice1.setText("Play again?");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+        checkIfDead();
+        System.out.println("days withot water" + daysNoWater);
+    }
+    public void deathFromDehydration()
+    {
+        txtMain.setText("You die from dehydration");
+        btnChoice1.setText("Play again?");
+        btnChoice2.setText("---");
+        btnChoice3.setText("---");
+        btnChoice4.setText("---");
+    }
+    public void deathFromInjury()
+    {
+        txtMain.setText("You die from injury");
         btnChoice1.setText("Play again?");
         btnChoice2.setText("---");
         btnChoice3.setText("---");
@@ -538,8 +599,7 @@ public class MainGameGUI extends javax.swing.JFrame {
                         .addGap(282, 282, 282)
                         .addComponent(lblStatusEffectsText)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblStatusEffectsInfo)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(lblStatusEffectsInfo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
