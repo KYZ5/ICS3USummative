@@ -28,17 +28,10 @@ public class MainGameGUI extends javax.swing.JFrame {
     static boolean map = true;
     static boolean food = false;
     static boolean water = true;
+    static boolean fork = false;
+    static boolean rubbing = false;
     static int days = 0;
     static int daysNoWater = 0;
-    //variables that allow other jframes to get values from this form.
-    public static boolean getWater()
-    {
-        return water;
-    }
-    public static boolean getMap()
-    {
-        return map;
-    }
     //A method that updates the status effect bar
     private void updateEffect()
     {
@@ -121,6 +114,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         water = true;
         days = 0;
         daysNoWater = 0;
+        
         updateHP();
         updateEffect();
         //main Text
@@ -152,7 +146,9 @@ public class MainGameGUI extends javax.swing.JFrame {
         //give options
         btnChoice1.setText("Look for shelter, who knows how dangerous this storm will get");
         btnChoice2.setText("Look for food and water, I'll need it if I want to get out of here safely");
+        //InventoryGUI.waterText(water, map);
     }
+    
    //if the user decides to look for food in the storm 
    public void food()
    {
@@ -164,6 +160,8 @@ public class MainGameGUI extends javax.swing.JFrame {
                + "By now, the storm has blown over, and the sun has begun to set. "
                + "\n"
                + "Do you:");
+       food = true;
+       water = true;
        //Present choices
        btnChoice1.setText("Press on and look for shelter through the night?");
        btnChoice2.setText("Sleep where you are?");
@@ -297,9 +295,11 @@ public class MainGameGUI extends javax.swing.JFrame {
         txtMain.setText("It's super old, you find barely anything of use. "
                 + "All of it's like the inside of a castle/keep, there are cracked glass windows that look into other rooms. "
                 + "You do find some really old worn out things, like cutlery, made of a material that you have no idea what it is. "
+                + "You take some of the objects with you, they're fairly light and they can't hurt to keep. "
                 + "You also go deep underground and find an underground lake, and get some water. ");
         thirsty = false;
         water = true;
+        fork = true;
         updateEffect();
         btnChoice1.setText("Start walking");
         btnChoice2.setText("---");
@@ -415,6 +415,7 @@ public class MainGameGUI extends javax.swing.JFrame {
                 + "You find their source in a sigil carved into the wall. "
                 + "You're no wizard, so you take the best rubbing you can, by scratching the image of the sigil into the back of your map with a rock. "
                 + "You spend an uneventful night in the cavern, and wake up the next day to keep walking. ");
+        rubbing = true;
         btnChoice1.setText("Head towards the city");
         btnChoice2.setText("---");
         btnChoice3.setText("---");
@@ -793,7 +794,7 @@ public class MainGameGUI extends javax.swing.JFrame {
     private void btnMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMapActionPerformed
         if (map == true)
         {
-        new MapGUI().setVisible(true);
+            new MapGUI().setVisible(true);
         }
     }//GEN-LAST:event_btnMapActionPerformed
 
