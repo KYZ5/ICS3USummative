@@ -32,6 +32,7 @@ public class MainGameGUI extends javax.swing.JFrame {
     static boolean rubbing = false;
     static int days = 0;
     static int daysNoWater = 0;
+    static String location = "The crashed plane";
     //A method that updates the status effect bar
     private void updateEffect()
     {
@@ -165,6 +166,7 @@ public class MainGameGUI extends javax.swing.JFrame {
        //Present choices
        btnChoice1.setText("Press on and look for shelter through the night?");
        btnChoice2.setText("Sleep where you are?");
+       location = "The streambed";
        checkIfDead();
    }
    //if the user decides to look for shelter
@@ -201,6 +203,7 @@ public class MainGameGUI extends javax.swing.JFrame {
        //choices
        btnChoice1.setText("Explore deeper");
        btnChoice2.setText("Stay in the room you are in");
+       location = "The mesas with the buildings inside";
        checkIfDead();
    }
    //if the user decides to sleep at the stream
@@ -287,6 +290,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        location = "Unknown territory, hic sunt dracones";
         checkIfDead();
     }
     //if the user goes deeper into the caverns
@@ -335,6 +339,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("Follow the plane");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        location = "In the badlands, past the mesas with the buildings inside";
         checkIfDead();
     }
     public void plane()
@@ -358,6 +363,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("Try to catch it for food");
         btnChoice3.setText("Follow it to see if it will lead you to water");
         btnChoice4.setText("---");
+        location = "The small creature";
         checkIfDead();
     }
     public void keepWalking()
@@ -370,8 +376,8 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("Sleep where you are, they're too far away.");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        location = "The badlands, in between the small creature and the mesas where you found the sigil";
         checkIfDead();
-        System.out.println("days withot water" + daysNoWater);
     }
     public void hunt()
     {
@@ -420,6 +426,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        location = "The mesas where you found the sigil";
         checkIfDead();
         System.out.println("days withot water" + daysNoWater);
     }
@@ -443,6 +450,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("Look for a door");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        location = "The nearest city";
         checkIfDead();
     }
     public void climb()
