@@ -272,7 +272,8 @@ public class MainGameGUI extends javax.swing.JFrame {
     public void left()
     {
         txtMain.setText("You make it back to the stream, and find your map and supplies piled up where you left them. "
-                + "You take a look at your map and try to figure out where you are, and plot your route to the nearest city. ");
+                + "You go back to sleep at the streambed, hoping the creature won't return. " 
+                + "When you are woken up by the sun, you take a look at your map and try to figure out where you are, and plot your route to the nearest city. ");
         map = true;
         food = true;
         water = true;
@@ -285,7 +286,7 @@ public class MainGameGUI extends javax.swing.JFrame {
     //if the user runs right
     public void lost()
     {
-        txtMain.setText("You are lost and eventually die of thirst without supplies or a map. Game over.");
+        txtMain.setText("You are lost in the badlands, and eventually die of thirst without supplies or a map. Game over.");
         btnChoice1.setText("Play again?");
         btnChoice2.setText("---");
         btnChoice3.setText("---");
@@ -296,9 +297,13 @@ public class MainGameGUI extends javax.swing.JFrame {
     //if the user goes deeper into the caverns
     public void deeper()
     {
-        txtMain.setText("It's super old, you find barely anything of use. "
-                + "All of it's like the inside of a castle/keep, there are cracked glass windows that look into other rooms. "
-                + "You do find some really old worn out things, like cutlery, made of a material that you have no idea what it is. "
+        txtMain.setText("The inside of the mesas look like an old building, far older than anything you've ever seen before. "
+                + "Very few things remain in the buildings, almost everything there seems to have erroded or rotted away oevr time. "
+                + "The inside of the building looks like it used to be a castle or a keep. "
+                + "There are heavily erroded statues and relifs that dot the halls, and the doorways are huged and arched. "
+                + "The occasional shatterd glass window will show you another room, equally desolate and dark. "
+                + "You do find some old worn out objects, like cutlery, made of a material that you have no idea what it is. "
+                + "They seem to be the only items still around. "
                 + "You take some of the objects with you, they're fairly light and they can't hurt to keep. "
                 + "You also go deep underground and find an underground lake, and get some water. ");
         thirsty = false;
