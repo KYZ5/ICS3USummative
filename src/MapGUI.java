@@ -15,6 +15,7 @@ public class MapGUI extends javax.swing.JFrame {
      */
     public MapGUI() {
         initComponents();
+        txtLocation.setText(MainGameGUI.location);
     }
 
     /**
@@ -26,31 +27,21 @@ public class MapGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        txtLocation = new javax.swing.JLabel();
+        txtLocationTitle = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        txtLocation.setFont(new java.awt.Font("Segoe Print", 0, 12));
+        getContentPane().add(txtLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, 580, 80));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        txtLocationTitle.setFont(new java.awt.Font("Segoe Print", 0, 18)); // NOI18N
+        txtLocationTitle.setText("Your Location: ");
+        getContentPane().add(txtLocationTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 140, 40));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\stcas7054\\Downloads\\ICS3U Summative map.jpg")); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -91,6 +82,8 @@ public class MapGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel txtLocation;
+    private javax.swing.JLabel txtLocationTitle;
     // End of variables declaration//GEN-END:variables
 }
