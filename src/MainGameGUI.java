@@ -233,7 +233,7 @@ public class MainGameGUI extends javax.swing.JFrame {
                 + "Eventually, you have to stop running to catch your breath, and you realize you are lost. "
                 + "You can't seem to remember what direction you came from. "
                 + "You walk: ");
-        //you lost your map
+        //you lost your map and other supplies
         map = false;
         food = false;
         water = false;
@@ -305,7 +305,8 @@ public class MainGameGUI extends javax.swing.JFrame {
                 + "You do find some old worn out objects, like cutlery, made of a material that you have no idea what it is. "
                 + "They seem to be the only items still around. "
                 + "You take some of the objects with you, they're fairly light and they can't hurt to keep. "
-                + "You also go deep underground and find an underground lake, and get some water. ");
+                + "As you explore, you find a tunnel that leads to a dark cavern deep underground, filled with water. "
+                + "You fill up your waterskein at the lake, and return to the surface. ");
         thirsty = false;
         water = true;
         fork = true;
@@ -374,7 +375,7 @@ public class MainGameGUI extends javax.swing.JFrame {
     public void keepWalking()
     {
         txtMain.setText("You keep walking and you see the spire of the nearest city off to the distance. "
-                + "you can also see a small cluster of mesas off to the side. "
+                + "You can also see a small cluster of mesas off to one side. "
                 + "They would probably take you about an hour out of your way to get to. "
                 + "Do you:");
         btnChoice1.setText("Use them as shelter for the night");
@@ -406,7 +407,7 @@ public class MainGameGUI extends javax.swing.JFrame {
     {
         txtMain.setText("You circle around to get a better look at the creature. "
                 + "It's covered in scales like a pangolin, but has far more legs. "
-                + "After several hours of following it and trying not to spook it, it leads you to a stream. "
+                + "After several hours of following the creature and trying not to spook it, it leads you to a stream. "
                 + "You stop to fill up your waterskein, and take a drink. "
                 + "Once you have done this, do you: ");
         thirsty = false;
@@ -449,6 +450,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         count();
         txtMain.setText("You get to the base of the spire, and are now faced with a problem that hadn't occured to you before. "
                 + "The spires rarely have access to the badlands by land. "
+                + "All transport of goods is done by plane, and communication consists mostly of teleporting wizards passing information around. "
                 + "The spire is made up of sandstone, and is far to tall to be able to talk to people at the top. "
                 + "How do you try to get to the top?");
         btnChoice1.setText("Climb the spire.");
@@ -460,7 +462,8 @@ public class MainGameGUI extends javax.swing.JFrame {
     }
     public void climb()
     {
-        txtMain.setText("You fall and die. It's like 5km of smooth cliff, what did you expect."
+        txtMain.setText("You try to climb the cliff, and manage to get pretty high off the ground. "
+                + "Eventually, a rock you were using for a foothold breaks under your weight, and you fall down, dying on impact. "
                 + "Game Over");
         btnChoice1.setText("Play again?");
         btnChoice2.setText("---");
