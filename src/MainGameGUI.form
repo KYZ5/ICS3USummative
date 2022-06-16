@@ -59,9 +59,11 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="btnInventory" min="-2" pref="429" max="-2" attributes="0"/>
+                                  <Component id="btnInventory" min="-2" pref="286" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btnMap" pref="437" max="32767" attributes="0"/>
+                                  <Component id="btnMap1" min="-2" pref="313" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="btnMap" min="-2" pref="309" max="-2" attributes="0"/>
                               </Group>
                               <Component id="btnChoice3" alignment="1" max="32767" attributes="0"/>
                               <Component id="btnChoice2" alignment="1" max="32767" attributes="0"/>
@@ -99,6 +101,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnInventory" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="btnMap" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="btnMap1" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -118,7 +121,7 @@
                 <Property name="columns" type="int" value="20"/>
                 <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
-                <Property name="text" type="java.lang.String" value="The main text of the game will appear here. Click on the buttons below to make choices or view&#xa; your inventory or map."/>
+                <Property name="text" type="java.lang.String" value="Welcome to my choose your own adventure game!&#xa;The main text of the game will appear here&#xa;Use the buttons below the main text field to make choices and progress the story.&#xa;Your hit points and status effects display above the main text area.&#xa;Status effects have varying levels of severity.&#xa;The injured status effect make you lose 2 hit points per day.&#xa;If you spend three days in a row with the thirsty status effect, you die of dehydration.&#xa;Show Inventory shows you inventory, and Show Map shows a map with your location on the bottom of the screen.&#xa;You can always view these instructions again by clicking the instructions button."/>
               </Properties>
             </Component>
           </SubComponents>
@@ -202,6 +205,14 @@
             </Property>
             <Property name="text" type="java.lang.String" value="None"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnMap1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="View Instructions"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMap1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -18,22 +18,48 @@ public class MainGameGUI extends javax.swing.JFrame {
     /**
      * Creates new form MainGameGUI
      */
-    
+    /*
+    ****Read before reading code******
+    -Most of the methods are essentially the same. Those that don't are more thouroughly documented.
+      They follow the general format of:
+        1. Set the main text field to the text that describes the story
+        2. Alter variables based on the story. This also alters status effects.
+        3. Set the button text to the next options
+        4. Change the location
+        5. Check if the person is dead
+    -There are too many ways to die at assorted points in the story, so running the checkIfDead method after every method ensures that dead people die. 
+    -I'm not going to go into a lot of detail about what exactly happens in each method because the txtMain.setText functions do that really well already.
+    -When each button is clicked, it runs through all possible options the text on that button can be set to. Each method has unique text that it sets the buttons to.
+        Whatever you do, do not alter the text on the button outputs without also chainging the code that checks what the button says.
+        That will "lock off" the option and will break the game.
+    */
     //Create needed variables
+    //they are all static so they can all be changed by the methods and keep those changes. 
+    //Tracks HP
     static int HP = 10;
+    //Tracks assorted status effects
+    //only thirsty and injured can acutally kill you
+    //tired and hungry are just meant to stress out the user
     static boolean thirsty = false;
     static boolean hungry = false;
     static boolean tired = false;
     static boolean injured = false;
+    //Tracks useful items you can collect
     static boolean map = true;
     static boolean food = false;
     static boolean water = true;
+    //these track completly useless collectables that I put in for fun.
     static boolean fork = false;
     static boolean rubbing = false;
+    //This tracks the days you have spent out in the badlands. It has no purpose, but if I wanted to expand the game more it could be very useful so I'm keeping it
     static int days = 0;
+    //If you go three days without water, you die. This is the variable that tells the computer that you are dead.
     static int daysNoWater = 0;
+    //This is used in the map, to say where you are. 
     static String location = "The crashed plane";
-    //A method that updates the status effect bar
+    //A method that updates the status effect bar.
+    //It just takes every single status effect, sees if you have it, and adds all the ones you have to a string called x.
+    //The status effect text block is then set to x.
     private void updateEffect()
     {
         String x = "";
@@ -56,6 +82,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         lblStatusEffectsInfo.setText(x);
     }
     //a method that updates HP
+    //This doesn't update the value, it just takes the number that is stored for calcualtions and spits it out onto the screen.
     private void updateHP()
     {
         lblHPNum.setText("" + HP);
@@ -63,7 +90,10 @@ public class MainGameGUI extends javax.swing.JFrame {
     //a method that deals with daily things, like using food and updating status effects
     private void count()
     {
+        //Gets the HP, you'll need it later
         HP = Integer.parseInt(lblHPNum.getText());
+        //If you have food, you eat it.
+        //If you don't have food, you are hungry.
         if (food)
         {
             food = false;
@@ -72,6 +102,8 @@ public class MainGameGUI extends javax.swing.JFrame {
         {
         hungry = true;
         }
+        //if you have water, you drink it
+        //if you don't, you are thirsty and have spend another day without water
         if (water)
         {
         water = false;
@@ -79,11 +111,14 @@ public class MainGameGUI extends javax.swing.JFrame {
         else
         {
         thirsty = true;
+        //It's very important to run the check if dead method after this one, because this counter needs to increase to kill you and we can't have people living without water, can we. 
         daysNoWater++;
+        //If you have a gaping wound on your arm, you lose 2 hit points.
         if (injured)
         {
             HP -= 2;
         }
+        //status effects and hit points may have changed, so you need to update and run them.
         updateEffect();
         updateHP();
         }
@@ -91,13 +126,17 @@ public class MainGameGUI extends javax.swing.JFrame {
     //A method that checks if you are dead and runs the relevant methods
     public void checkIfDead()
     {
-        HP = Integer.parseInt(lblHPNum.getText());
+        //There are two kinds of dead that might happen not as the direct result of a button click.
+        //If you go three (or somehow more) days without water, you die. 
         if (daysNoWater >= 3)
         {
+            //This is an ending method
             deathFromDehydration();
         }
+        //If your HP are 0 or less, you die.
         if (HP <= 0)
         {
+            //This is an ending method
             deathFromInjury();
         }
     }
@@ -105,6 +144,7 @@ public class MainGameGUI extends javax.swing.JFrame {
     private void begin()
     {
         //resets hp and status effects if the user is replaying
+        //This resets all variables to their original state
         HP = 10;
         thirsty = false;
         hungry = false;
@@ -115,7 +155,11 @@ public class MainGameGUI extends javax.swing.JFrame {
         water = true;
         days = 0;
         daysNoWater = 0;
-        
+        fork = false;
+        rubbing = false;
+        location = "The crashed plane";
+        //If the user is replaying, I need to reset labels.
+        //The user cannot click this while another window is open, and those auto-reset when opened, so only these things need to be changed
         updateHP();
         updateEffect();
         //main Text
@@ -147,7 +191,6 @@ public class MainGameGUI extends javax.swing.JFrame {
         //give options
         btnChoice1.setText("Look for shelter, who knows how dangerous this storm will get");
         btnChoice2.setText("Look for food and water, I'll need it if I want to get out of here safely");
-        //InventoryGUI.waterText(water, map);
     }
     
    //if the user decides to look for food in the storm 
@@ -161,21 +204,23 @@ public class MainGameGUI extends javax.swing.JFrame {
                + "By now, the storm has blown over, and the sun has begun to set. "
                + "\n"
                + "Do you:");
+       //you got food and water
        food = true;
        water = true;
        //Present choices
        btnChoice1.setText("Press on and look for shelter through the night?");
        btnChoice2.setText("Sleep where you are?");
        location = "The streambed";
+       //from here on out, the game is going to check if you are dead after every single method.
        checkIfDead();
    }
    //if the user decides to look for shelter
    public void shelter()
    {     
-       //Up to the next comment deals with conditional dialogue.
+       //Up to the next section of comments deals with conditional dialogue.
        //The only way someone seeing this could possibly be tired is if they went to get food and came back
        //Since they are doing the same thing at different times, string x stores description text that chagnes based on what they do
-       //x is incorporated into the main text later
+       //x is incorporated into the main text later.
        String x = "";
        if (tired)
        {
@@ -193,6 +238,7 @@ public class MainGameGUI extends javax.swing.JFrame {
        }
        //main text
        txtMain.setText("You press forwards." + x
+               //x is added in here
                +"You aim for a group of low mesas, who seemed to have shadows on the side that might have been caves when you flew over. "
                + "Eventually, you reach the mesas. "
                + "On the side of one is a cave, and as you enter, you notice that it goes far deeper than you previously thought, presumalby connecting to a cave system. "
@@ -267,7 +313,6 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         checkIfDead();
     }
-    
     //if the user runs left
     public void left()
     {
@@ -334,20 +379,24 @@ public class MainGameGUI extends javax.swing.JFrame {
         txtMain.setText("You wander for a day and head towards a city. "
                 + "Towards the end of the day, you see a plane flying on the horizon, and you think it might be a search party. ");
         //this won't work as a method so it's here for now. 
+        //I have no idea why this is happening so I'm fixing it like this for now
         if (injured)
         {
             HP -= 2;
         }
         updateHP();
         //a day passes
+        //count basically makes a day pass
         count();
         btnChoice1.setText("Keep following your map");
         btnChoice2.setText("Follow the plane");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        //The location strings are getting a bit long but I'm keeping them like this so the map doens't get cluttered
         location = "In the badlands, past the mesas with the buildings inside";
         checkIfDead();
     }
+    //If the user chases the plane
     public void plane()
     {
         txtMain.setText("You chase after the plane, and you soon lose sight of it. "
@@ -360,6 +409,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice4.setText("---");
         checkIfDead();
     }
+    //If the user keeps following their map
     public void map()
     {
         txtMain.setText("You follow your map, spending a fairly uneventful day pushing forwards into the badlands. "
@@ -372,6 +422,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         location = "The small creature";
         checkIfDead();
     }
+    //Onece the user is past the small animal
     public void keepWalking()
     {
         txtMain.setText("You keep walking and you see the spire of the nearest city off to the distance. "
@@ -385,6 +436,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         location = "The badlands, in between the small creature and the mesas where you found the sigil";
         checkIfDead();
     }
+    //If the user tries to catch the animal
     public void hunt()
     {
         txtMain.setText("You grab a rock, and sneak up behind the creature. "
@@ -394,6 +446,7 @@ public class MainGameGUI extends javax.swing.JFrame {
                 + "You eventually manage to flip it over, and it's softer underbelly is far easier to break though to. "
                 + "You eventually cut though, an get the first bits of food you've had in a long time. ");
         hungry = false;
+        //It's little so you only take 1 damage
         HP--;
         updateHP();
         updateEffect();
@@ -403,6 +456,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice4.setText("---");
         checkIfDead();
     }
+    //If the user follows the creature
     public void follow()
     {
         txtMain.setText("You circle around to get a better look at the creature. "
@@ -419,6 +473,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice4.setText("---");
         checkIfDead();
     }
+    //If the user goes to sleep in the mesas (like the second ones) 
     public void mesas()
     {
         txtMain.setText("You head towards the mesas. "
@@ -537,6 +592,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         lblHPNum = new javax.swing.JLabel();
         lblStatusEffectsText = new javax.swing.JLabel();
         lblStatusEffectsInfo = new javax.swing.JLabel();
+        btnMap1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -545,7 +601,7 @@ public class MainGameGUI extends javax.swing.JFrame {
         txtMain.setColumns(20);
         txtMain.setLineWrap(true);
         txtMain.setRows(5);
-        txtMain.setText("The main text of the game will appear here. Click on the buttons below to make choices or view\n your inventory or map.");
+        txtMain.setText("Welcome to my choose your own adventure game!\nThe main text of the game will appear here\nUse the buttons below the main text field to make choices and progress the story.\nYour hit points and status effects display above the main text area.\nStatus effects have varying levels of severity.\nThe injured status effect make you lose 2 hit points per day.\nIf you spend three days in a row with the thirsty status effect, you die of dehydration.\nShow Inventory shows you inventory, and Show Map shows a map with your location on the bottom of the screen.\nYou can always view these instructions again by clicking the instructions button.");
         jScrollPane1.setViewportView(txtMain);
 
         btnChoice1.setText("Continue");
@@ -602,6 +658,13 @@ public class MainGameGUI extends javax.swing.JFrame {
         lblStatusEffectsInfo.setForeground(new java.awt.Color(255, 255, 255));
         lblStatusEffectsInfo.setText("None");
 
+        btnMap1.setText("View Instructions");
+        btnMap1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMap1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -621,9 +684,11 @@ public class MainGameGUI extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnMap, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE))
+                                .addComponent(btnMap1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnMap, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnChoice3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnChoice2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnChoice1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -653,7 +718,8 @@ public class MainGameGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMap, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMap, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMap1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -814,6 +880,10 @@ public class MainGameGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnMapActionPerformed
 
+    private void btnMap1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMap1ActionPerformed
+        new InstructionsGUI().setVisible(true);
+    }//GEN-LAST:event_btnMap1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -859,6 +929,7 @@ public class MainGameGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnChoice4;
     private javax.swing.JButton btnInventory;
     private javax.swing.JButton btnMap;
+    private javax.swing.JButton btnMap1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblHPNum;

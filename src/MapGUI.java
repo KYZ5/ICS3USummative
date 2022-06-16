@@ -40,7 +40,7 @@ public class MapGUI extends javax.swing.JFrame {
         txtLocationTitle.setText("Your Location: ");
         getContentPane().add(txtLocationTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 140, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\stcas7054\\Downloads\\ICS3U Summative map.jpg")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICS3U Summative map.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, -1));
 
         pack();
