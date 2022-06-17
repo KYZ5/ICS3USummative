@@ -15,7 +15,7 @@ public class InventoryGUI extends javax.swing.JFrame {
      */
     public InventoryGUI() {
         initComponents();
-            //initialize/reset variables in accordance with what we already did
+            //initialize/reset variables in accordance with what we already did in the main game
             boolean water = MainGameGUI.water;
             boolean map = MainGameGUI.map;
             boolean thirsty = MainGameGUI.thirsty;
@@ -53,7 +53,7 @@ public class InventoryGUI extends javax.swing.JFrame {
             //fork code
             if (fork)
             {
-                txtFork.setText("A strange object found in the mesas");
+                txtFork.setText("Strange objects found in the mesas");
             }
             //rubbing code
             if (rubbing)

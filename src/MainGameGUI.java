@@ -1,7 +1,3 @@
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /*
  * Stella Castura
  * 6/7/2022
@@ -40,6 +36,7 @@ public class MainGameGUI extends javax.swing.JFrame {
     //Tracks assorted status effects
     //only thirsty and injured can acutally kill you
     //tired and hungry are just meant to stress out the user
+    //They do nothing but I think it makes the game more stressful so they're staying
     static boolean thirsty = false;
     static boolean hungry = false;
     static boolean tired = false;
@@ -48,7 +45,9 @@ public class MainGameGUI extends javax.swing.JFrame {
     static boolean map = true;
     static boolean food = false;
     static boolean water = true;
-    //these track completly useless collectables that I put in for fun.
+    //these track completly useless collectables that I put in for fun
+    //fork is never fully described, only as a strange tool, so if you see a reference to that, it's the fork.
+    //You also have several of them, but one extra letter is too much to type
     static boolean fork = false;
     static boolean rubbing = false;
     //This tracks the days you have spent out in the badlands. It has no purpose, but if I wanted to expand the game more it could be very useful so I'm keeping it
@@ -185,7 +184,7 @@ public class MainGameGUI extends javax.swing.JFrame {
                 + "Your plane, however, is definitly not airworthy. "
                 + "One of the wings has torn, and the sigil that keeps the planbe in the air is broken. "
                 + "The magical storm still rages on around you, and you can barely see through the haze of terracotta sand. "
-                + "You know that you have a helf-empty water bottle you were keeping in the cockpit, as well as the map and navigational equipment you grab on your way out of the plane. "
+                + "You know that you have a helf-empty waterskein you were keeping in the cockpit, as well as the map and navigational equipment you grab on your way out of the plane. "
                 + "\n"
                 + "Do you:");
         //give options
@@ -319,9 +318,12 @@ public class MainGameGUI extends javax.swing.JFrame {
         txtMain.setText("You make it back to the stream, and find your map and supplies piled up where you left them. "
                 + "You go back to sleep at the streambed, hoping the creature won't return. " 
                 + "When you are woken up by the sun, you take a look at your map and try to figure out where you are, and plot your route to the nearest city. ");
+        //You sleep and get your stuff back
+        tired = false;
         map = true;
         food = true;
         water = true;
+        updateEffect();
         btnChoice1.setText("Start walking");
         btnChoice2.setText("---");
         btnChoice3.setText("---");
@@ -331,11 +333,15 @@ public class MainGameGUI extends javax.swing.JFrame {
     //if the user runs right
     public void lost()
     {
+        //This output is a little underwhelming, but I can't think of a better way to phrase it.
         txtMain.setText("You are lost in the badlands, and eventually die of thirst without supplies or a map. Game over.");
+        //From here on out, all methods where you die will set all buttons to nothing, except for the first one, which will be "Play again?"
+        //This will link dirctly back to the beginning again.
         btnChoice1.setText("Play again?");
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
+        //This doesn't output, but I think it's a cool easter egg, even if it's only in the code, so I'm keeping it
         location = "Unknown territory, hic sunt dracones";
         checkIfDead();
     }
@@ -347,11 +353,12 @@ public class MainGameGUI extends javax.swing.JFrame {
                 + "The inside of the building looks like it used to be a castle or a keep. "
                 + "There are heavily erroded statues and relifs that dot the halls, and the doorways are huged and arched. "
                 + "The occasional shatterd glass window will show you another room, equally desolate and dark. "
-                + "You do find some old worn out objects, like cutlery, made of a material that you have no idea what it is. "
+                + "You do find some old worn out objects and tools, made of a material that you have no idea what it is. "
                 + "They seem to be the only items still around. "
                 + "You take some of the objects with you, they're fairly light and they can't hurt to keep. "
                 + "As you explore, you find a tunnel that leads to a dark cavern deep underground, filled with water. "
-                + "You fill up your waterskein at the lake, and return to the surface. ");
+                + "You drink and fill up your waterskein at the lake, and return to the surface after spending the night in the mesas. ");
+        tired = false;
         thirsty = false;
         water = true;
         fork = true;
@@ -380,14 +387,17 @@ public class MainGameGUI extends javax.swing.JFrame {
                 + "Towards the end of the day, you see a plane flying on the horizon, and you think it might be a search party. ");
         //this won't work as a method so it's here for now. 
         //I have no idea why this is happening so I'm fixing it like this for now
+        //It's literally just this one instance where the count method doesn't update HP
+        //I have no idea what is going on
+        HP = Integer.parseInt(lblHPNum.getText());
         if (injured)
         {
             HP -= 2;
         }
-        updateHP();
         //a day passes
         //count basically makes a day pass
         count();
+        updateHP();
         btnChoice1.setText("Keep following your map");
         btnChoice2.setText("Follow the plane");
         btnChoice3.setText("---");
@@ -402,6 +412,8 @@ public class MainGameGUI extends javax.swing.JFrame {
         txtMain.setText("You chase after the plane, and you soon lose sight of it. "
                 + "It takes you quite a while to figure out where you are, and you lose a day trying to get back on track. "
                 + "You can't find any shelter, and you have to sleep out in the open that night. ");
+        //See it works in here
+        //What on earth is going on
         count();
         btnChoice1.setText("Keep following your map");
         btnChoice2.setText("---");
@@ -419,16 +431,19 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("Try to catch it for food");
         btnChoice3.setText("Follow it to see if it will lead you to water");
         btnChoice4.setText("---");
+        //This isn't really a location but it's marked on the map
         location = "The small creature";
         checkIfDead();
     }
-    //Onece the user is past the small animal
+    //Once the user is past the small animal
+    //There's a few ways to get here
     public void keepWalking()
     {
         txtMain.setText("You keep walking and you see the spire of the nearest city off to the distance. "
                 + "You can also see a small cluster of mesas off to one side. "
                 + "They would probably take you about an hour out of your way to get to. "
                 + "Do you:");
+        //There was already a count done for this day.
         btnChoice1.setText("Use them as shelter for the night");
         btnChoice2.setText("Sleep where you are, they're too far away.");
         btnChoice3.setText("---");
@@ -445,6 +460,7 @@ public class MainGameGUI extends javax.swing.JFrame {
                 + "You grab it by the tail, and flip it over. Its long claws scrach at your hand, marking them badly. "
                 + "You eventually manage to flip it over, and it's softer underbelly is far easier to break though to. "
                 + "You eventually cut though, an get the first bits of food you've had in a long time. ");
+        //You got food
         hungry = false;
         //It's little so you only take 1 damage
         HP--;
@@ -464,6 +480,8 @@ public class MainGameGUI extends javax.swing.JFrame {
                 + "After several hours of following the creature and trying not to spook it, it leads you to a stream. "
                 + "You stop to fill up your waterskein, and take a drink. "
                 + "Once you have done this, do you: ");
+        //This assumes the user gets water, drinks, and then gets more
+        //Because that makes sense
         thirsty = false;
         water = true;
         updateEffect();
@@ -489,7 +507,6 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice4.setText("---");
         location = "The mesas where you found the sigil";
         checkIfDead();
-        System.out.println("days withot water" + daysNoWater);
     }
     public void outside()
     {
@@ -502,12 +519,13 @@ public class MainGameGUI extends javax.swing.JFrame {
     }
     public void city()
     {
-        count();
         txtMain.setText("You get to the base of the spire, and are now faced with a problem that hadn't occured to you before. "
                 + "The spires rarely have access to the badlands by land. "
                 + "All transport of goods is done by plane, and communication consists mostly of teleporting wizards passing information around. "
                 + "The spire is made up of sandstone, and is far to tall to be able to talk to people at the top. "
                 + "How do you try to get to the top?");
+        count();
+        //I might want to make it a bit more clear that the spire is like 5km up
         btnChoice1.setText("Climb the spire.");
         btnChoice2.setText("Look for a door");
         btnChoice3.setText("---");
@@ -524,20 +542,46 @@ public class MainGameGUI extends javax.swing.JFrame {
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
-        checkIfDead();
     }
     public void door()
     {
-        txtMain.setText("You walk for several hours and find a door that leads to a staircase that heads up. You go up."
-                + "You make it back to the city. wow. would you look at that. "
-                + "You eventually return to being a pilot. ");
+        //x and y are conditional dialogue options. 
+        //x shows if you got injured'
+        //y deals with useless collectables and the outcome of having them
+        String x = "";
+        String y = "";
+        if (injured)
+        {
+            x += "You go to a hospital, and they treat the gash on your arm. "
+                    + "There's no lasting damage, but it does leave a pretty bad scar. ";
+        }
+        if (fork && rubbing)
+        {
+            y += "You show the tool you found in the mesas on the first night and the sigil from the second mesas to some local wizards. "
+                    + "They still have no idea what the tool is for, and all they know about the sigil is that it's some kind of warding magic, far more advanced than any modern magic.";
+        }
+        else if (fork)
+        {
+            y += "You show the tool you found in the mesas on the first night to some local wizards. "
+                    + "They still have no idea what the tool is for, and don't have enough context to figure out what it is.";
+        }
+        else if (rubbing)
+        {
+            y += "You show the magical sigil from the mesas to some local wizards. "
+                    + "All they know about it is that it's some kind of warding magic, far more advanced than any modern magic.";
+        }
+        txtMain.setText("You walk for several hours and find a door that leads to a staircase that heads up. You go up. "
+                + "It takes you a while to readjust to the hustle and bustle of a city, but you eventually manage to get yourself oriented. "
+                + x
+                + y
+                + "You eventually return to being a pilot, but stay far away from the paths where magical storms often spring up. ");
         btnChoice1.setText("Play again?");
         btnChoice2.setText("---");
         btnChoice3.setText("---");
         btnChoice4.setText("---");
         checkIfDead();
-        System.out.println("days withot water" + daysNoWater);
     }
+    //The next two methods are a bit underwhelmig, but I can't think of better dialogue
     public void deathFromDehydration()
     {
         txtMain.setText("You die from dehydration");
@@ -736,20 +780,20 @@ public class MainGameGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void btnChoice2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice2ActionPerformed
         //This is button 2
-        //The begin method sets the text to this. leads to the food() method
+        
         switch (btnChoice2.getText()) {
-        //The food mothod sets the code to this. Leads to getting attacked
+            //The begin method sets the text to this. leads to the food() method
             case "Look for food and water, I'll need it if I want to get out of here safely":
                 food();
                 break;
-            //the food method sets the button to this
+            //the food method sets the button to this. Leads to getting attacked 
             case "Sleep where you are?":
                 sleep();
                 break;
-            //the sleep methid sets the button to this
+            //the sleep method sets the button to this
             case "Fight":
                 fight();
                 break;
@@ -761,6 +805,7 @@ public class MainGameGUI extends javax.swing.JFrame {
             case "Stay in the room you are in":
                 stay();
                 break;
+            //the walk method sets the text to this
             case "Follow the plane":
                 plane();
                 break;
@@ -804,7 +849,7 @@ public class MainGameGUI extends javax.swing.JFrame {
             case "Left":
                 left();
                 break;
-            //the shelter method sets the code to this
+            //the shelter method sets the text to this
             case "Explore deeper":
                 deeper();
                 break;
@@ -812,7 +857,7 @@ public class MainGameGUI extends javax.swing.JFrame {
             case "Play again?":
                 begin();
                 break;
-            //several methods set the text to this, it all leads to the first day of walking. 
+            //several methods set the text to this, it all leads to the first day of walking. (Or getting lost if you don't have a map)
             case "Start walking":
                 if (map)
                 {
