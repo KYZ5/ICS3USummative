@@ -248,6 +248,9 @@ public class MainGameGUI extends javax.swing.JFrame {
        //choices
        btnChoice1.setText("Explore deeper");
        btnChoice2.setText("Stay in the room you are in");
+       btnChoice3.setText("---");
+       btnChoice4.setText("---");
+       
        location = "The mesas with the buildings inside";
        checkIfDead();
    }
