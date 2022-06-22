@@ -15,11 +15,12 @@ public class InstructionsGUI extends javax.swing.JFrame {
      */
     public InstructionsGUI() {
         initComponents();
+        //this just spits out these words onto the screen, no real code here. 
         txtInstructions.setText("Welcome to my choose your own adventure game! \n"
                 + "Use the buttons below the main text field to make choices and progress the story. \n"
                 + "Your hit points and status effects display above the main text area \n"
                 + "Status effects have varying levels of severity. \n"
-                + "The injured status effect make you lose 2 hit points per day. \n"
+                + "The injured status effect makes you lose 2 hit points per day. \n"
                 + "If you spend three days in a row with the thirsty status effect, you die of dehydration. \n"
                 + "Show Inventory shows you inventory, and Show Map shows a map with your location on the bottom of the screen. ");
     }

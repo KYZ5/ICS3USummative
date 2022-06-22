@@ -15,6 +15,7 @@ public class MapGUI extends javax.swing.JFrame {
      */
     public MapGUI() {
         initComponents();
+        //the location string is updated in the main class code so I just get it and spit it out. 
         txtLocation.setText(MainGameGUI.location);
     }
 

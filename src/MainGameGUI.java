@@ -809,12 +809,15 @@ public class MainGameGUI extends javax.swing.JFrame {
             case "Follow the plane":
                 plane();
                 break;
+            //the map method sets the text to this
             case "Try to catch it for food":
                 hunt();
                 break;
+            //the keepWalking method sets the text to this
             case "Sleep where you are, they're too far away.":
                 outside();
                 break;
+            //the city method sets the text to this
             case "Look for a door":
                 door();
                 break;
@@ -872,17 +875,21 @@ public class MainGameGUI extends javax.swing.JFrame {
             case "Keep following your map":
                 map();
                 break;
+            //this is from the map, hunt, and follow methods. They all make you keep walking
             case "Keep walking":
                 //fall through
             case "Leave it be":
                 keepWalking();
                 break;
+            //the keepWalking method sets the text to this
             case "Use them as shelter for the night":
                 mesas();
                 break;
+            //the outside and measas methods both set the text to this
             case "Head towards the city":
                 city();
                 break;
+            //the city method sets the text to this. 
             case "Climb the spire.":
                 climb();
                 break;
@@ -898,6 +905,7 @@ public class MainGameGUI extends javax.swing.JFrame {
        {
             lost();
        }
+       //the keepWalking method sets the code to this
        else if ((btnChoice3.getText().equals("Follow it to see if it will lead you to water")))
        {
             follow();
@@ -915,10 +923,12 @@ public class MainGameGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChoice4ActionPerformed
 
     private void btnInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryActionPerformed
+        //Create and show the inventory GUI
         new InventoryGUI().setVisible(true);
     }//GEN-LAST:event_btnInventoryActionPerformed
 
     private void btnMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMapActionPerformed
+        //if you don't have a map in the game you don't get to see the interface
         if (map == true)
         {
             new MapGUI().setVisible(true);
@@ -926,6 +936,7 @@ public class MainGameGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMapActionPerformed
 
     private void btnMap1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMap1ActionPerformed
+        //Creates and shows the instructions GUI
         new InstructionsGUI().setVisible(true);
     }//GEN-LAST:event_btnMap1ActionPerformed
 

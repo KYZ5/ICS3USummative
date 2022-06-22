@@ -23,7 +23,11 @@ public class InventoryGUI extends javax.swing.JFrame {
             boolean fork = MainGameGUI.fork;
             boolean rubbing = MainGameGUI.rubbing;
             
+            //all of these if statments basically set the text blocks to the item you have if you have it 
+            
             //water code
+            //the only way you would have a waterskein lost is if you also lost your map
+            //so I can check to see if you have an empty water bottle or no water bottle using the map variable.
             if (water)
             {
                 txtWater.setText("Full waterskein");
