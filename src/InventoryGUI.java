@@ -30,11 +30,11 @@ public class InventoryGUI extends javax.swing.JFrame {
             //so I can check to see if you have an empty water bottle or no water bottle using the map variable.
             if (water)
             {
-                txtWater.setText("Full waterskein");
+                txtWater.setText("Full waterskin");
             }
             else if (map)
             {
-                txtWater.setText("Empty waterskein");
+                txtWater.setText("Empty waterskin");
             }
             else
             {

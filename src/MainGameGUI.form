@@ -121,7 +121,7 @@
                 <Property name="columns" type="int" value="20"/>
                 <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
-                <Property name="text" type="java.lang.String" value="Welcome to my choose your own adventure game!&#xa;The main text of the game will appear here&#xa;Use the buttons below the main text field to make choices and progress the story.&#xa;Your hit points and status effects display above the main text area.&#xa;Status effects have varying levels of severity.&#xa;The injured status effect make you lose 2 hit points per day.&#xa;If you spend three days in a row with the thirsty status effect, you die of dehydration.&#xa;Show Inventory shows you inventory, and Show Map shows a map with your location on the bottom of the screen.&#xa;You can always view these instructions again by clicking the instructions button."/>
+                <Property name="text" type="java.lang.String" value="Welcome to my choose your own adventure game!&#xa;The main text of the game will appear here&#xa;Use the buttons below the main text field to make choices and progress the story.&#xa;Your hit points and status effects display above the main text area.&#xa;Status effects have varying levels of severity.&#xa;The injured status effect makes you lose 2 hit points per day.&#xa;If you spend three days in a row with the thirsty status effect, you die of dehydration.&#xa;Show Inventory shows you inventory, and Show Map shows a map with your location on the bottom of the screen.&#xa;You can always view these instructions again by clicking the instructions button."/>
               </Properties>
             </Component>
           </SubComponents>
